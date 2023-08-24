@@ -1,4 +1,3 @@
-const dbConfig = require('../config/db.config');
 const Sequelize = require('sequelize');
 const keyboards = require('./keyboard.model');
 const dotenv = require('dotenv');
