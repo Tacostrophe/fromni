@@ -12,9 +12,6 @@ module.exports = (sequelize, Sequelize) => {
     button_message_max_length: {
       type: Sequelize.INTEGER,
     },
-    link_button_support: {
-      type: Sequelize.BOOLEAN,
-    },
     link_button_amount: {
       type: Sequelize.INTEGER,
     },
