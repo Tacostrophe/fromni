@@ -12,6 +12,8 @@ module.exports = (sequelize, Sequelize) => {
     tag: {
       type: Sequelize.STRING,
     },
+  }, {
+    timestamps: false,
   })
 
   return Button;  

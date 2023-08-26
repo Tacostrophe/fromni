@@ -7,14 +7,16 @@ module.exports = (sequelize, Sequelize) => {
       }
     },
     button_max_amount: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.NUMERIC,
     },
     button_message_max_length: {
       type: Sequelize.INTEGER,
     },
     link_button_amount: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.NUMERIC,
     },
+  }, {
+    timestamps: false,
   })
 
   return Keyboard;  

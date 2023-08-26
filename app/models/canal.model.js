@@ -6,6 +6,8 @@ module.exports = (sequelize, Sequelize) => {
     message_max_length: {
       type: Sequelize.INTEGER,
     },
+  }, {
+    timestamps: false,
   })
 
   return Canal;  
