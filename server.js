@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const db = require('./app/models');
 const dotenv = require('dotenv');
+const router = require('./app/routes/campaign.routes')();
 
 dotenv.config();
 
@@ -19,6 +20,8 @@ app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+
+app.use('/api/campaigns', router);
 
 // syncing db
 db.sequelize.sync()

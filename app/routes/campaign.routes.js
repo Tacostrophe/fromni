@@ -1,4 +1,4 @@
-module.exports = app => {
+module.exports = () => {
   const campaigns = require('../controllers/campaign.controller');
   const { Router } = require('express');
 
@@ -6,4 +6,6 @@ module.exports = app => {
 
   router.post('/', campaigns.create);
   router.get('/', campaigns.get);
-}
+
+  return router;  
+};
