@@ -1,0 +1,20 @@
+extends layout
+
+block layout-content
+  div.View
+    h3 Campaign #{campaign.id}
+    p #{campaign.updatedAt}
+    ul(style='list-style-type:none')
+      li Canal: #{campaign.canal.name}
+      if campaign.message
+        li Message: #{campaign.message}
+      li Keyboard: #{campaign.keyboard_type}
+      if campaign.buttons.length!=0
+        li Buttons:
+          ul
+            each button in campaign.buttons ? campaign.buttons : []
+              li 
+                h5 Button #{button.tag}
+                ul 
+                  li Type: #{button.type}
+                  li Text: #{button.text}

@@ -1,0 +1,8 @@
+extends layout
+
+block layout-content
+  div.View
+    ul(style='list-style-type:none')
+      each campaign in campaigns ? campaigns : []
+        li
+          a(href="/campaigns/"+campaign.id) Campaign #{campaign.id} #{campaign.canal.name}  #{campaign.buttons}
