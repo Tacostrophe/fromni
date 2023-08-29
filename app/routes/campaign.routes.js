@@ -4,8 +4,9 @@ module.exports = () => {
 
   const router = Router();
 
-  router.post('/', campaigns.create);
-  router.get('/', campaigns.get);
+  router.post('/create', campaigns.create);
+  router.get('/', campaigns.list);
+  router.get('/:id', campaigns.retrieve);
 
   return router;  
 };

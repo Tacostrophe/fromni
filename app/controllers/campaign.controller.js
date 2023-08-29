@@ -1,40 +1,25 @@
 const db = require('../models');
 
-exports.create = async (req, res) => {
-//   small validation
-  if (!req.body.canal) {
-    res.status(400).send({
-      message: 'canal name is required',
-    });
-    return;
-  }
-  if (!req.body.keyboard) {
-    res.status(400).send({
-      message: 'keyboard type is required',
-    });
-    return;
-  }
-
-  const canal = await db.canals.findOne({ where: { name: req.body.canal } });
-  const campaign = {
-    canalId: canal.id,
-    message: req.body.message,
-    keyboard_type: req.body.keyboard,
-  };
-
-  const newCampaign = await db.campaigns.create(campaign);
-  const buttons = req.body.buttons;
-  if (buttons) {
-    buttons.forEach((button) => {button['campaignId']=newCampaign.id});
-    const newButtons = await db.buttons.bulkCreate(buttons);
-  }
-  newCampaign['dataValues']['buttons'] = buttons ?? [];
-  res.send(newCampaign);
+exports.create = (req, res) => {
+  res.render("index", {title: 'Welcome'});
 };
 
-exports.get = async (req, res) => {
+exports.list = async (req, res) => {
   const campaigns = await db.campaigns.findAll({
-    include: 'buttons',
+    include: 'canal',
+    order: [
+      ['updatedAt', 'DESC'],
+      ['id', 'DESC'],
+    ],
   });
-  res.send(campaigns);
+  res.render("campaignsList", { campaigns: campaigns });
+};
+
+exports.retrieve = async (req, res) => {
+  const id = req.params.id;
+
+  const campaign = await db.campaigns.findByPk(id, {
+    include: ['canal', 'buttons'],
+  });
+  res.render("campaign", {campaign});
 };
