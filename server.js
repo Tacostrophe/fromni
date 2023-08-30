@@ -1,9 +1,12 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
+
 const db = require('./app/models');
 const dotenv = require('dotenv');
-const router = require('./app/routes/campaign.routes')();
+const apiCampaignRouter = require('./app/routes/api/api.campaign.routes')();
+const indexRouter = require('./app/routes/index.routes')();
+const campaignRouter = require('./app/routes/campaign.routes')();
 
 dotenv.config();
 
@@ -21,7 +24,13 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/campaigns', router);
+app.use('/api/campaigns', apiCampaignRouter);
+app.use('/', indexRouter);
+app.use('/campaigns', campaignRouter);
+
+app.set("views", path.join(__dirname, "app", "views"));
+
+app.set('view engine', 'pug');
 
 // syncing db
 db.sequelize.sync()
