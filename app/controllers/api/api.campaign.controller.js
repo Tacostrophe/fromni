@@ -28,10 +28,13 @@ exports.create = async (req, res) => {
       });
     }
   }
-  console.log(buttons);
-  await db.buttons.bulkCreate(buttons.flat());
-  newCampaigns.forEach(async(newCampaign) => {
-    newCampaign['dataValues']['buttons'] = await db.buttons.findAll({ where: {campaignId: newCampaign.id}});
+  const newButtons = await db.buttons.bulkCreate(buttons.flat());
+  let campaignButtons
+  newCampaigns.forEach((newCampaign) => {
+    campaignButtons = newButtons.filter((newButton) => newButton.campaignId == newCampaign.id);
+    if (campaignButtons.length > 0) {
+      newCampaign.dataValues.buttons = campaignButtons;
+    }
   });
   res.send(newCampaigns);
 };
