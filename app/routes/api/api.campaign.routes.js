@@ -1,5 +1,6 @@
 const validate = require('../../middlewares/validators');
-const campaignValidationRules = require('../../middlewares/validators/campaignValidator');
+const campaignValidationRules = require('../../middlewares/validators/campaignValidationRules');
+const { body } = require('express-validator');
 
 module.exports = () => {
   const campaigns = require('../../controllers/api/api.campaign.controller');
@@ -9,8 +10,7 @@ module.exports = () => {
 
   router.post(
     '/',
-    // campaignValidationRules,
-    // validate,
+    validate(campaignValidationRules),
     campaigns.create
   );
   router.get('/', campaigns.list);
