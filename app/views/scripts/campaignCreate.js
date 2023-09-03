@@ -10,7 +10,7 @@ function addButton(index=0) {
   buttonLi.appendChild(document.createTextNode('Button type: '));
 
   let buttonTypeSelect = document.createElement('select');  
-  buttonTypeSelect.name = 'button_type_' + index;
+  buttonTypeSelect.name = 'buttons_' + index + '_type';
   buttonTypeSelect.type = 'text';
   buttonLi.appendChild(buttonTypeSelect);
   let type;
@@ -27,7 +27,7 @@ function addButton(index=0) {
 
   let buttonTextInput = document.createElement('input');
   buttonTextInput.type = 'text';
-  buttonTextInput.name = 'button_text_' + index;
+  buttonTextInput.name = 'buttons_' + index + '_text';
   buttonTextInput.required = true;
   buttonTextInput.placeholder = 'button text';
   buttonLi.appendChild(buttonTextInput);
@@ -38,7 +38,7 @@ function addButton(index=0) {
 
   let buttonTagInput = document.createElement('input');
   buttonTagInput.type = 'text';
-  buttonTagInput.name = 'button_tag_' + index;
+  buttonTagInput.name = 'buttons_' + index + '_tag';
   buttonTagInput.required = true;
   buttonTagInput.placeholder = 'button tag';
   buttonLi.appendChild(buttonTagInput);
@@ -61,7 +61,6 @@ function addCampaign(canals) {
   newCampaign.appendChild(document.createTextNode(`Campaign ${this.index+1}`));
 
   const newCampaignAttributes = document.createElement('ul');
-  newCampaignAttributes.style = 'list-style-type:none';
   newCampaign.appendChild(newCampaignAttributes);
 
   const canalAttribute = document.createElement('li');
@@ -127,6 +126,5 @@ function addCampaign(canals) {
 
   const buttonsList = document.createElement('ul');
   buttonsList.id = 'buttons_' + this.index;
-  buttonsList.style = 'list-style-type:none';
   buttonListAttribute.appendChild(buttonsList); 
 }
