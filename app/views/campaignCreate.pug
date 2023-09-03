@@ -3,9 +3,9 @@ extends layout
 block layout-content
   h2  #{title}
   form(method='POST' action='')
-    ul#campaigns(style='list-style-type:none')
+    ul#campaigns
       li#campaign_0  Campaign 1
-        ul(style='list-style-type:none')
+        ul
           li
             | Canal: 
             select#canal.form-control(type='text' name='canal_0' value=canal)
@@ -29,33 +29,7 @@ block layout-content
             button.btn.btn-primary(type='button' onclick='addButton()')
               | Add button
                
-            ul#buttons_0( style='list-style-type:none')
-          //- li 
-          //-   ul(style='list-style-type:none') Button
-          //-     li 
-          //-       label.control-label(for='button_0_type')
-          //-         | Button type: 
-          //-       select#button_0_type.form-control(type='text' name='button_type' value=button_type)
-          //-         option(value='quick_answer' selected=('quick_answer'===lastButtonType)) quick answer
-          //-         option(value='link' selected=('link'===lastButtonType)) link
-          //-     li 
-          //-       label.control-label(for='button_0_text')
-          //-         | Button text: 
-          //-       input#button_0_text.form-control(
-          //-         type='text'
-          //-         placeholder='button message'
-          //-         name='button_0_text'
-          //-         value=(undefined===button_0_text ? '' : button_0_text)
-          //-       )
-          //-     li 
-          //-       label.control-label(for='button_0_tag')
-          //-         | Button tag: 
-          //-       input#button_0_tag.form-control(
-          //-         type='tag'
-          //-         placeholder='button tag'
-          //-         name='button_0_tag'
-          //-         value=(undefined===button_0_tag ? '' : button_0_tag)
-          //-       )
+            ul#buttons_0
 
     button.btn.btn-primary(type='button' onclick='addCampaign('+JSON.stringify(canals)+')')
       | Add campaign
