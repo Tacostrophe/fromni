@@ -1,7 +1,4 @@
 function convertCampaign(req, res, next) {
-  console.log('were in convert');
-  console.log(req.body);
-
   campaigns = [];
 
   Object.entries(req.body).forEach(([key, value]) => {
@@ -17,7 +14,6 @@ function convertCampaign(req, res, next) {
       if (Array.isArray(req.body[key])) {
         req.body[key].forEach((val, ind) => {
           if (!campaigns[+campaignIndex][attribute][ind]) {
-            console.log('creating button' + ind);
             campaigns[+campaignIndex][attribute][ind] = {};
           }
           campaigns[+campaignIndex][attribute][ind][subAttribute] = val;
