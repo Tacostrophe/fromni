@@ -45,9 +45,9 @@ function addButton(index=0) {
   
 }
 
-function addCampaign(canals) {
+function addCampaign(canals, i) {
   if (!this.index) {
-    this.index = 0
+    this.index = i
   }
   this.index++;
 
@@ -89,7 +89,7 @@ function addCampaign(canals) {
 
   const messageInput = document.createElement('input');
   messageInput.type = 'text';
-  messageInput.placeholder = 'your message';
+  messageInput.placeholder = 'Your message';
   messageInput.name = 'message_' + this.index;
   messageAttribute.appendChild(messageInput);
 
