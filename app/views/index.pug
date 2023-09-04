@@ -1,5 +1,8 @@
 extends layout
 
 block layout-content
-  div.Title
+  div.title
     h3 Welcome
+  div.messages
+  if message 
+    p= message
