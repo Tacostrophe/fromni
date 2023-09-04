@@ -1,11 +1,13 @@
 const db = require('../models');
 const asyncHandler = require('express-async-handler');
+const createCampaigns = require('../utils/createCampaigns');
 
 exports.createGet = asyncHandler(async(req, res) => {
   const canalObjects = await db.canals.findAll({
     attributes: ['name'],
   });
   const canals = canalObjects.reduce((acc, curr) => [...acc, curr.name], []);
+  
   res.render('campaignCreate', {
     title: 'Create campaigns',
     canals: canals,
@@ -13,17 +15,11 @@ exports.createGet = asyncHandler(async(req, res) => {
 });
 
 exports.createPost = asyncHandler(async(req, res) => {
-  const canalObjects = await db.canals.findAll({
-    attributes: ['name'],
-  });
-  const canals = canalObjects.reduce((acc, curr) => [...acc, curr.name], []);
-  res.render('campaignCreate', {
-    title: 'Create campaigns',
-    canals: canals,
-    lastCanal: req.body.canal,
-    message: req.body.message,
-    lastKeyboard: req.body.keyboard,
-    tests: ['one', 'two', 'three'],
+  const newCampaigns = await createCampaigns(req);
+
+  res.render('index', {
+    title: 'Created',
+    message: 'Campaigns created',
   });
 });
 
@@ -35,7 +31,10 @@ exports.list = asyncHandler(async (req, res) => {
       ['id', 'DESC'],
     ],
   });
-  res.render("campaignsList", { campaigns: campaigns });
+  res.render('campaignsList', {
+    title: 'List of campaigns',  
+    campaigns: campaigns 
+  });
 });
 
 exports.retrieve = asyncHandler(async (req, res) => {
