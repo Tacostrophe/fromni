@@ -4,7 +4,6 @@ const path = require('path');
 
 const db = require('./app/models');
 const dotenv = require('dotenv');
-const apiCampaignRouter = require('./app/routes/api/api.campaign.routes')();
 const indexRouter = require('./app/routes/index.routes')();
 const campaignRouter = require('./app/routes/campaign.routes')();
 
@@ -24,7 +23,6 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/campaigns', apiCampaignRouter);
 app.use('/', indexRouter);
 app.use('/campaigns', campaignRouter);
 
@@ -40,11 +38,6 @@ db.sequelize.sync()
   .catch((err) => {
     console.log("Failed to sync db: " + err.message);
   });
-
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Testing application." });
-});
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
