@@ -4,34 +4,100 @@ block layout-content
   h2  #{title}
   form(method='POST' action='')
     ul#campaigns
-      li#campaign_0  Campaign 1
-        ul
-          li
-            | Canal: 
-            select#canal.form-control(type='text' name='canal_0' value=canal)
-              each canal in canals
-                option(value=canal selected=canal===lastCanal) #{canal}
-          li
-            | Message: 
-            input#message.form-control(
-              type='text'
-              placeholder='Your message'
-              name='message_0'
-              value=(undefined===message ? '' : message)
-            )
-          li
-            | Keyboard: 
-            select#keyboard.form-control(type='text' name='keyboard_0' value=keyboard)
-              option(value='inline' selected=('inline'===lastKeyboard)) inline
-              option(value='standard' selected=('standard'===lastKeyboard)) standard
-          li
-            | Buttons: 
-            button.btn.btn-primary(type='button' onclick='addButton()')
-              | Add button
-               
-            ul#buttons_0
+      if locals.campaigns
+        - var i = 0;
+        while i < locals.campaigns.length
+          li(id='campaign_'+i)  Campaign #{i+1}
+            ul
+              li 
+                | Canal: 
+                select#canal(type='text' name='canal_'+i)
+                  each canal in canals 
+                    option(value=canal selected=canal===locals.campaigns[i].canal) #{canal}
+              li 
+                | Message: 
+                input#message(
+                  type='text'
+                  placeholder='Your message'
+                  name='message_' + i
+                  value=(undefined===locals.campaigns[i].message ? '' : locals.campaigns[i].message)
+                )
+              li 
+                | Keyboard: 
+                select#keyboard(
+                  type='text'
+                  name='keyboard_'+i 
+                  value = locals.campaigns[i].keyboard
+                )
+                  option(value='inline' selected=('inline'===locals.campaigns[i].keyboard)) inline
+                  option(value='standard' selected=('standard'===locals.campaigns[i].keyboard)) standard
+              li 
+                | Buttons: 
+                button.btn.btn-primary(type='button' onclick='addButton(' + i + ')')
+                  | Add button
+                ul(id='buttons_'+i)
+                  if locals.campaigns[i].buttons
+                    each button in locals.campaigns[i].buttons
+                      | Button: 
+                      li 
+                        | Button type: 
+                        select(
+                          type='text'
+                          name='buttons_'+ i + '_type' 
+                        )
+                          option(value='quick_answer' selected=('quick_answer'===button.type)) quick_answer
+                          option(value='link' selected=('link'===button.type)) link
+                      li 
+                        | Button text: 
+                        input(
+                          type='text'
+                          placeholder='button text'
+                          name='buttons_' + i + '_text'
+                          value=button.text
+                          required=true
+                        )
+                      li 
+                        | Button tag: 
+                        input(
+                          type='text'
+                          placeholder='button tag'
+                          name='buttons_' + i + '_tag'
+                          value=button.tag
+                          required=true
+                        )
+            - i++
 
-    button.btn.btn-primary(type='button' onclick='addCampaign('+JSON.stringify(canals)+')')
+
+      else
+        li(id='campaign_0')  Campaign 1
+          ul
+            li
+              | Canal: 
+              select#canal(type='text' name='canal_0')
+                each canal in canals
+                  option(value=canal) #{canal}
+            li
+              | Message: 
+              input#message(
+                type='text'
+                placeholder='Your message'
+                name='message_0'
+              )
+            li
+              | Keyboard: 
+              select#keyboard(type='text' name='keyboard_0')
+                option(value='inline') inline
+                option(value='standard') standard
+            li
+              | Buttons: 
+              button.btn.btn-primary(type='button' onclick='addButton()')
+                | Add button
+                 
+              ul#buttons_0
+
+    button.btn.btn-primary(
+      type='button'
+      onclick='addCampaign('+JSON.stringify(canals) + ', ' + (locals.campaigns ? locals.campaigns.length - 1 : 0)+')')
       | Add campaign
     button.btn.btn-primary(type='submit') Submit
 
