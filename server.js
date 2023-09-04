@@ -6,6 +6,7 @@ const db = require('./app/models');
 const dotenv = require('dotenv');
 const indexRouter = require('./app/routes/index.routes')();
 const campaignRouter = require('./app/routes/campaign.routes')();
+const populateDB = require('./app/utils/populateDB');
 
 dotenv.config();
 
@@ -35,9 +36,25 @@ db.sequelize.sync()
   .then(() => {
     console.log("Synced db.");
   })
+  .then(() => {
+    const data = db.canals.findOne({
+      attributes: ['id'],
+    });
+    return Promise.resolve(data);
+  })
+  // adding keyboards if needed
+  .then((data) => {
+    if (!data) {
+      console.log('populating database with canals');
+      populateDB();
+    } else {
+      console.log('database is already populated with canals');
+    }
+  })
   .catch((err) => {
-    console.log("Failed to sync db: " + err.message);
+    console.log("Failed to sync db or populate with canals: " + err.message);
   });
+
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
