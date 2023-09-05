@@ -78,7 +78,9 @@ const campaignValidationRules = [
           const linkButtonAmount = value.reduce((acc, curr) => (curr.type == 'link' ? acc+1 : acc), 0);
           if (isFinite(+keyboard.link_button_amount)) {
             if ((+keyboard.link_button_amount) == 0 && linkButtonAmount > 0) {
-              return Promise.reject(`Link-buttons are not supported for ${campaign.canal} with ${campaign.keyboard} keyboard`);
+              return Promise.reject(
+                `${campaign.canal} with ${campaign.keyboard} keyboard doesn't support link-buttons`
+              );
             } else if ((+keyboard.link_button_amount) < linkButtonAmount) {
               return Promise.reject(
                 `Link-button amount for ${campaign.canal} with ${campaign.keyboard} keyboard`
