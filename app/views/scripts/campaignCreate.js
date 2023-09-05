@@ -3,16 +3,23 @@ const { canals } = require("../../models");
 function addButton(index=0) {
   let buttons = document.getElementById(`buttons_${index}`);
 
-  buttons.appendChild(document.createTextNode('Button: '));
+  let buttonHead = document.createElement('h3');
+  buttons.appendChild(buttonHead);
+  buttonHead.appendChild(document.createTextNode('Button '));
 
-  let buttonLi = document.createElement('li');
-  buttons.appendChild(buttonLi);
-  buttonLi.appendChild(document.createTextNode('Button type: '));
+  let buttonLabel = document.createElement('label');
+  buttonLabel.for = 'button type';
+  buttons.appendChild(buttonLabel);
 
-  let buttonTypeSelect = document.createElement('select');  
+  let span = document.createElement('span');
+  span.appendChild(document.createTextNode('Type '));
+  buttonLabel.appendChild(span);
+
+  let buttonTypeSelect = document.createElement('select');
+  buttonTypeSelect.className += 'select-field';
   buttonTypeSelect.name = 'buttons_' + index + '_type';
   buttonTypeSelect.type = 'text';
-  buttonLi.appendChild(buttonTypeSelect);
+  buttonLabel.appendChild(buttonTypeSelect);
   let type;
   ['quick_answer', 'link'].forEach((typeOption) => {
     type = document.createElement('option');
@@ -21,27 +28,45 @@ function addButton(index=0) {
     buttonTypeSelect.appendChild(type);
   });
 
-  buttonLi = document.createElement('li');
-  buttons.appendChild(buttonLi);
-  buttonLi.appendChild(document.createTextNode('Button text: '));
+  buttonLabel = document.createElement('label');
+  buttonLabel.for = 'button text';
+  buttons.appendChild(buttonLabel);
 
-  let buttonTextInput = document.createElement('input');
-  buttonTextInput.type = 'text';
-  buttonTextInput.name = 'buttons_' + index + '_text';
-  buttonTextInput.required = true;
-  buttonTextInput.placeholder = 'button text';
-  buttonLi.appendChild(buttonTextInput);
+  span = document.createElement('span');
+  span.appendChild(document.createTextNode('Text '));
+  buttonLabel.appendChild(span);
 
-  buttonLi = document.createElement('li');
-  buttons.appendChild(buttonLi);
-  buttonLi.appendChild(document.createTextNode('Button tag: '));
+  let spanRequired = document.createElement('span');
+  spanRequired.className += 'required';
+  spanRequired.appendChild(document.createTextNode('*'));
+  span.appendChild(spanRequired);
+
+  let buttonTextarea = document.createElement('textarea');
+  buttonTextarea.type = 'text';
+  buttonTextarea.name = 'buttons_' + index + '_text';
+  buttonTextarea.required = true;
+  buttonTextarea.className += 'textarea-field';
+  buttonLabel.appendChild(buttonTextarea);
+
+  buttonLabel = document.createElement('label');
+  buttonLabel.for = 'button tag';
+  buttons.appendChild(buttonLabel);
+
+  span = document.createElement('span');
+  span.appendChild(document.createTextNode('Tag '));
+  buttonLabel.appendChild(span);
+
+  spanRequired = document.createElement('span');
+  spanRequired.className += 'required';
+  spanRequired.appendChild(document.createTextNode('*'));
+  span.appendChild(spanRequired);
 
   let buttonTagInput = document.createElement('input');
   buttonTagInput.type = 'text';
   buttonTagInput.name = 'buttons_' + index + '_tag';
   buttonTagInput.required = true;
-  buttonTagInput.placeholder = 'button tag';
-  buttonLi.appendChild(buttonTagInput);
+  buttonTagInput.className += 'input-field';
+  buttonLabel.appendChild(buttonTagInput);
   
 }
 
@@ -54,27 +79,29 @@ function addCampaign(canals, i) {
   let campaigns = document.getElementById(`campaigns`);
 
   
-  const newCampaign = document.createElement('li');
-  newCampaign.name = `campaign_${this.index}`;
-  newCampaign.text = `Campaign ${this.index}`;
+  const newCampaign = document.createElement('div');
+  newCampaign.id = 'campaign_' + this.index;
   campaigns.appendChild(newCampaign);
-  newCampaign.appendChild(document.createTextNode(`Campaign ${this.index+1}`));
 
-  const newCampaignAttributes = document.createElement('ul');
-  newCampaign.appendChild(newCampaignAttributes);
+  const newCampaignHead = document.createElement('h3');
+  newCampaignHead.appendChild(document.createTextNode(`Campaign ${this.index}`))
+  newCampaign.appendChild(newCampaignHead);
 
-  const canalAttribute = document.createElement('li');
+  let label = document.createElement('label');
+  label.for = 'canal';
+  newCampaign.appendChild(label);
 
-  newCampaignAttributes.appendChild(canalAttribute);
-  canalAttribute.appendChild(document.createTextNode('Canal: '));
+  let span = document.createElement('span');
+  span.appendChild(document.createTextNode('Canal '));
+  label.appendChild(span);
 
   const canalSelect = document.createElement('select');
   canalSelect.type = 'text';
   canalSelect.name = 'canal_' + this.index;
-  canalAttribute.appendChild(canalSelect);
+  canalSelect.className += 'select-field';
+  label.appendChild(canalSelect);
 
   let canalOption;
-  console.log(canals);
   canals.forEach((canal) => {
     canalOption = document.createElement('option');
     canalOption.value = canal;
@@ -82,26 +109,33 @@ function addCampaign(canals, i) {
     canalSelect.appendChild(canalOption);
   });
 
-  const messageAttribute = document.createElement('li');
+  label = document.createElement('label');
+  label.for = 'message';
+  newCampaign.appendChild(label);
 
-  newCampaignAttributes.appendChild(messageAttribute);
-  messageAttribute.appendChild(document.createTextNode('Message: '));
+  span = document.createElement('span');
+  span.appendChild(document.createTextNode('Message '));
+  label.appendChild(span);
 
-  const messageInput = document.createElement('input');
-  messageInput.type = 'text';
-  messageInput.placeholder = 'Your message';
-  messageInput.name = 'message_' + this.index;
-  messageAttribute.appendChild(messageInput);
+  const messageTextarea = document.createElement('textarea');
+  messageTextarea.type = 'text';
+  messageTextarea.name = 'message_' + this.index;
+  messageTextarea.className = 'textarea-field';
+  label.appendChild(messageTextarea);
 
-  const keyboardAttribute = document.createElement('li');
+  label = document.createElement('label');
+  label.for = 'keyboard';
+  newCampaign.appendChild(label);
 
-  newCampaignAttributes.appendChild(keyboardAttribute);
-  keyboardAttribute.appendChild(document.createTextNode('Keyboard: '));
+  span = document.createElement('span');
+  span.appendChild(document.createTextNode('Keyboard '));
+  label.appendChild(span);
 
   const keyboardSelect = document.createElement('select');
   keyboardSelect.type = 'text';
   keyboardSelect.name = 'keyboard_' + this.index;
-  keyboardAttribute.appendChild(keyboardSelect);
+  keyboardSelect.className = 'select-field';
+  label.appendChild(keyboardSelect);
 
   let keyboardOption
   ['inline', 'standard'].forEach((keyboard) => {
@@ -111,20 +145,25 @@ function addCampaign(canals, i) {
     keyboardSelect.appendChild(keyboardOption);
   });
 
-  const buttonListAttribute = document.createElement('li');
+  label = document.createElement('label');
+  label.for = 'buttons';
+  newCampaign.appendChild(label);
 
-  newCampaignAttributes.appendChild(buttonListAttribute);
-  buttonListAttribute.appendChild(document.createTextNode('Buttons: '))
+  span = document.createElement('span');
+  span.appendChild(document.createTextNode('Buttons '));
+  label.appendChild(span);
 
   const index = this.index;
+
   const addButtonButton = document.createElement('button');
-  addButtonButton.class = 'btn btn-primary';
+  addButtonButton.className += 'btn';
   addButtonButton.type = 'button';
   addButtonButton.innerHTML = 'Add button';
   addButtonButton.onclick = () => addButton(index);
-  buttonListAttribute.appendChild(addButtonButton);
+  label.appendChild(addButtonButton);
 
-  const buttonsList = document.createElement('ul');
-  buttonsList.id = 'buttons_' + this.index;
-  buttonListAttribute.appendChild(buttonsList); 
+  const buttonsDiv = document.createElement('div');
+  buttonsDiv.id = 'buttons_' + this.index;
+  buttonsDiv.className = 'buttons';
+  label.appendChild(buttonsDiv); 
 }

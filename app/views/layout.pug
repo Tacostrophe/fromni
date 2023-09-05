@@ -2,18 +2,22 @@ block variables
 doctype html
 html
   head
-    meta(charset="utf-8")
-    //- link(rel="shortcut icon", href="/favicon.ico")
-    meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
-    meta(name="theme-color", content="#000000")
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='theme-color', content='#000000')
     title #{title} | Fromni
+    style
+      include ./css/campaign.css
   body
     div#root
-      h1.Banner Fromni
-      div.NavButtons
-        ul(style='list-style-type:none')
-          li
-            a(href="/campaigns/create") Create new campaign
-          li
-            a(href="/campaigns") List of campaigns
+      div.primary-heading
+        h1 Fromni
+      nav
+        ul.menu
+          li.menu-group 
+            a(href='/') Home
+          li.menu-group
+            a(href='/campaigns/create') Create new campaign
+          li.menu-group
+            a(href='/campaigns') List of campaigns
       block layout-content

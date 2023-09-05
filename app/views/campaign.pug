@@ -4,7 +4,7 @@ block layout-content
   div.View
     h3 Campaign #{campaign.id}
     p #{campaign.updatedAt}
-    ul(style='list-style-type:none')
+    ul
       li Canal: #{campaign.canal.name}
       if campaign.message
         li Message: #{campaign.message}

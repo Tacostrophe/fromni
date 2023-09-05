@@ -1,8 +1,13 @@
 extends layout
 
 block layout-content
-  div.View
-    ul(style='list-style-type:none')
-      each campaign in campaigns ? campaigns : []
-        li
-          a(href="/campaigns/"+campaign.id) Campaign #{campaign.id} #{campaign.canal.name}  #{campaign.buttons}
+  div.list
+    div.heading 
+      h2 #{title}
+    if campaigns.length
+      each campaign in campaigns
+        ul
+          li
+            a(href="/campaigns/"+campaign.id) Campaign #{campaign.id} #{campaign.canal.name}  #{campaign.buttons}
+    else 
+      p No campaigns
