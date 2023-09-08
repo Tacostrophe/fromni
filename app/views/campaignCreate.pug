@@ -8,9 +8,10 @@ block layout-content
       div#campaigns
         if locals.campaigns
           - var i = 0;
+          - var j;
           while i < locals.campaigns.length
             div(id='campaign_'+i)
-              h3 Campaign #{i+1}
+              span Campaign #{i+1}
               label(for='canal') 
                 span Canal 
                 select.select-field(
@@ -46,35 +47,44 @@ block layout-content
                   | Add button
                 div.buttons(id='buttons_'+i)
                   if locals.campaigns[i].buttons
-                    each button in locals.campaigns[i].buttons
-                      h3 Button 
-                      label(for='button type') 
-                        span Type 
-                        select.select-field(
-                          type='text'
-                          name='buttons_'+ i + '_type' 
+                    - j = 0;
+                    //- each button in locals.campaigns[i].buttons
+                    while j < locals.campaigns[i].buttons.length
+                      label(id='button_'+i+'_'+j for='button')
+                        span Button
+                        button.btn(
+                          type='button'
+                          onclick='rmButton("button_' + i + '_' + j + '")'
                         )
-                          option(value='quick_answer' selected=('quick_answer'===button.type)) quick_answer
-                          option(value='link' selected=('link'===button.type)) link
-                      label(for='button text')
-                        span Text 
-                          span.required *
-                        textarea.textarea-field(
-                          type='text'
-                          name='buttons_' + i + '_text'
-                          required=true
-                        )
-                          | #{button.text}
-                      label(for='button tag') 
-                        span Tag 
-                          span.required *
-                        input.input-field(
-                          type='text'
-                          name='buttons_' + i + '_tag'
-                          value=button.tag
-                          required=true
-                        )
-              - i++
+                          | Delete button
+                        label(for='button type') 
+                          span Type 
+                          select.select-field(
+                            type='text'
+                            name='buttons_'+ i + '_type' 
+                          )
+                            option(value='quick_answer' selected=('quick_answer'===locals.campaigns[i].buttons[j].type)) quick_answer
+                            option(value='link' selected=('link'===locals.campaigns[i].buttons[j].type)) link
+                        label(for='button text')
+                          span Text 
+                            span.required *
+                          textarea.textarea-field(
+                            type='text'
+                            name='buttons_' + i + '_text'
+                            required=true
+                          )
+                            | #{locals.campaigns[i].buttons[j].text}
+                        label(for='button tag') 
+                          span Tag 
+                            span.required *
+                          input.input-field(
+                            type='text'
+                            name='buttons_' + i + '_tag'
+                            value=locals.campaigns[i].buttons[j].tag
+                            required=true
+                          )
+                      - j++;
+              - i++;
 
 
         else

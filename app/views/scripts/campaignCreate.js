@@ -3,23 +3,34 @@ const { canals } = require("../../models");
 function addButton(index=0) {
   let buttons = document.getElementById(`buttons_${index}`);
 
-  let buttonHead = document.createElement('h3');
-  buttons.appendChild(buttonHead);
-  buttonHead.appendChild(document.createTextNode('Button '));
-
   let buttonLabel = document.createElement('label');
-  buttonLabel.for = 'button type';
+  buttonLabel.for = 'button';
   buttons.appendChild(buttonLabel);
 
   let span = document.createElement('span');
-  span.appendChild(document.createTextNode('Type '));
+  span.appendChild(document.createTextNode('Button '));
   buttonLabel.appendChild(span);
+
+  const deleteButtonButton = document.createElement('button');
+  deleteButtonButton.className += 'btn';
+  deleteButtonButton.type = 'button';
+  deleteButtonButton.innerHTML = 'Delete button';
+  deleteButtonButton.onclick = () => buttonLabel.remove();
+  buttonLabel.appendChild(deleteButtonButton);
+
+  let buttonAttributeLabel = document.createElement('label');
+  buttonAttributeLabel.for = 'button type';
+  buttonLabel.appendChild(buttonAttributeLabel);
+
+  span = document.createElement('span');
+  span.appendChild(document.createTextNode('Type '));
+  buttonAttributeLabel.appendChild(span);
 
   let buttonTypeSelect = document.createElement('select');
   buttonTypeSelect.className += 'select-field';
   buttonTypeSelect.name = 'buttons_' + index + '_type';
   buttonTypeSelect.type = 'text';
-  buttonLabel.appendChild(buttonTypeSelect);
+  buttonAttributeLabel.appendChild(buttonTypeSelect);
   let type;
   ['quick_answer', 'link'].forEach((typeOption) => {
     type = document.createElement('option');
@@ -28,13 +39,13 @@ function addButton(index=0) {
     buttonTypeSelect.appendChild(type);
   });
 
-  buttonLabel = document.createElement('label');
-  buttonLabel.for = 'button text';
-  buttons.appendChild(buttonLabel);
+  buttonAttributeLabel = document.createElement('label');
+  buttonAttributeLabel.for = 'button text';
+  buttonLabel.appendChild(buttonAttributeLabel);
 
   span = document.createElement('span');
   span.appendChild(document.createTextNode('Text '));
-  buttonLabel.appendChild(span);
+  buttonAttributeLabel.appendChild(span);
 
   let spanRequired = document.createElement('span');
   spanRequired.className += 'required';
@@ -46,15 +57,15 @@ function addButton(index=0) {
   buttonTextarea.name = 'buttons_' + index + '_text';
   buttonTextarea.required = true;
   buttonTextarea.className += 'textarea-field';
-  buttonLabel.appendChild(buttonTextarea);
+  buttonAttributeLabel.appendChild(buttonTextarea);
 
-  buttonLabel = document.createElement('label');
-  buttonLabel.for = 'button tag';
-  buttons.appendChild(buttonLabel);
+  buttonAttributeLabel = document.createElement('label');
+  buttonAttributeLabel.for = 'button tag';
+  buttonLabel.appendChild(buttonAttributeLabel);
 
   span = document.createElement('span');
   span.appendChild(document.createTextNode('Tag '));
-  buttonLabel.appendChild(span);
+  buttonAttributeLabel.appendChild(span);
 
   spanRequired = document.createElement('span');
   spanRequired.className += 'required';
@@ -66,8 +77,13 @@ function addButton(index=0) {
   buttonTagInput.name = 'buttons_' + index + '_tag';
   buttonTagInput.required = true;
   buttonTagInput.className += 'input-field';
-  buttonLabel.appendChild(buttonTagInput);
+  buttonAttributeLabel.appendChild(buttonTagInput);
   
+}
+
+function rmButton(buttonLabelId) {
+  const buttonLabel = document.getElementById(buttonLabelId);
+  buttonLabel.remove();
 }
 
 function addCampaign(canals, i) {
