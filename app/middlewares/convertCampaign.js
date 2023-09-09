@@ -29,7 +29,9 @@ function convertCampaign(req, res, next) {
     }
   });
 
-  req.body = { campaigns };
+  // if some campaign was deleted campaign list (campaigns var here) will include empty values
+  // so we filter them 
+  req.body = { campaigns: campaigns.filter((campaign) => campaign) };
   return next();
 }
 
