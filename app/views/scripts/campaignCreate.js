@@ -81,9 +81,9 @@ function addButton(index=0) {
   
 }
 
-function rmButton(buttonLabelId) {
-  const buttonLabel = document.getElementById(buttonLabelId);
-  buttonLabel.remove();
+function rmElement(elementId) {
+  const element = document.getElementById(elementId);
+  element.remove();
 }
 
 function addCampaign(canals, i) {
@@ -94,20 +94,27 @@ function addCampaign(canals, i) {
 
   let campaigns = document.getElementById(`campaigns`);
 
-  
-  const newCampaign = document.createElement('div');
+  const newCampaign = document.createElement('label');
   newCampaign.id = 'campaign_' + this.index;
   campaigns.appendChild(newCampaign);
 
-  const newCampaignHead = document.createElement('h3');
-  newCampaignHead.appendChild(document.createTextNode(`Campaign ${this.index + 1}`))
-  newCampaign.appendChild(newCampaignHead);
+  let span = document.createElement('span');
+  span.className += 'prm';
+  span.appendChild(document.createTextNode(`Campaign ${this.index + 1}`))
+  newCampaign.appendChild(span);
+
+  const deleteCampaignButton = document.createElement('button');
+  deleteCampaignButton.className += 'btn';
+  deleteCampaignButton.type = 'button';
+  deleteCampaignButton.innerHTML = 'Delete campaign';
+  deleteCampaignButton.onclick = () => newCampaign.remove();
+  newCampaign.appendChild(deleteCampaignButton);
 
   let label = document.createElement('label');
   label.for = 'canal';
   newCampaign.appendChild(label);
 
-  let span = document.createElement('span');
+  span = document.createElement('span');
   span.appendChild(document.createTextNode('Canal '));
   label.appendChild(span);
 

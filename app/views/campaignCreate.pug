@@ -10,8 +10,13 @@ block layout-content
           - var i = 0;
           - var j;
           while i < locals.campaigns.length
-            div(id='campaign_'+i)
-              span Campaign #{i+1}
+            label(id='campaign_'+i)
+              span.prm Campaign #{i+1}
+              button.btn(
+                type='button'
+                onclick='rmElement("campaign_' + i + '")'
+              )
+                | Delete campaign
               label(for='canal') 
                 span Canal 
                 select.select-field(
@@ -48,13 +53,12 @@ block layout-content
                 div.buttons(id='buttons_'+i)
                   if locals.campaigns[i].buttons
                     - j = 0;
-                    //- each button in locals.campaigns[i].buttons
                     while j < locals.campaigns[i].buttons.length
                       label(id='button_'+i+'_'+j for='button')
                         span Button
                         button.btn(
                           type='button'
-                          onclick='rmButton("button_' + i + '_' + j + '")'
+                          onclick='rmElement("button_' + i + '_' + j + '")'
                         )
                           | Delete button
                         label(for='button type') 
@@ -88,8 +92,13 @@ block layout-content
 
 
         else
-          div(id='campaign_0')
-            h3 Campaign 1
+          label(id='campaign_0')
+            span.prm Campaign 1
+            button.btn(
+              type='button'
+              onclick='rmElement("campaign_0")'
+            )
+              | Delete campaign
             label(for='canal')
               span Canal  
               select.select-field(
