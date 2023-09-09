@@ -100,7 +100,7 @@ function addCampaign(canals, i) {
   campaigns.appendChild(newCampaign);
 
   const newCampaignHead = document.createElement('h3');
-  newCampaignHead.appendChild(document.createTextNode(`Campaign ${this.index}`))
+  newCampaignHead.appendChild(document.createTextNode(`Campaign ${this.index + 1}`))
   newCampaign.appendChild(newCampaignHead);
 
   let label = document.createElement('label');
