@@ -2,7 +2,7 @@ const { custom, body } = require('express-validator');
 const db = require('../../models');
 
 const campaignValidationRules = [
-  body('campaigns', 'Invalid input')
+  body('campaigns', 'No campaigns were sent').isArray({min: 1})
     .custom((value) => {
       if (value.length > 1) {
         const canalsCount = value.reduce((acc, curr) => {
