@@ -15,12 +15,35 @@ const validate = (validationRules) => {
       return next();
     }
     const errors = result.array();
+    const globalErrors = [];
+    const campaigns = req.body.campaigns;
+
+    errors.forEach((error) => {
+      const pathList = error.path.split(/\[|\]\.|\./);
+      console.log(pathList);
+      if (pathList.length < 2) {
+        globalErrors.push(error);
+      } else if (pathList.length < 4) {
+        const [_, campaignIndex] = pathList;
+        if (!campaigns[campaignIndex]['errors']) {
+          campaigns[campaignIndex]['errors'] = [];
+        }
+        campaigns[campaignIndex]['errors'].push(error);
+      } else if (pathList[2] === 'buttons') {
+        const [_, campaignIndex, attribute, buttonIndex] = pathList;
+        if (!campaigns[campaignIndex][attribute][buttonIndex]['errors']){
+          campaigns[campaignIndex][attribute][buttonIndex]['errors'] = [];
+        }
+        campaigns[campaignIndex][attribute][buttonIndex]['errors'].push(error);
+      }
+    });
+    console.log(campaigns);
     
     return res.render('campaignCreate', {
       title: 'Create campaigns',
       canals: canals,
-      campaigns: req.body.campaigns,
-      errors: errors,
+      campaigns: campaigns,
+      errors: globalErrors,
     });
   };
 };

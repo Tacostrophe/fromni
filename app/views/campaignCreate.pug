@@ -87,7 +87,17 @@ block layout-content
                             value=locals.campaigns[i].buttons[j].tag
                             required=true
                           )
+                      if locals.campaigns[i].buttons[j].errors
+                        ul.errors 
+                          | Button errors 
+                          for error in locals.campaigns[i].buttons[j].errors
+                            li!=error.msg
                       - j++;
+              if locals.campaigns[i].errors
+                ul.errors 
+                  | Errors 
+                  for error in locals.campaigns[i].errors
+                    li!=error.msg
               - i++;
 
 
@@ -139,11 +149,11 @@ block layout-content
       br
       button.btn(type='submit') Submit
 
-      if errors
+      if errors.length > 0
         ul.errors
           | Errors
           for error in errors
-            li!= error.msg
+            li!= error.path + " " + error.msg
   
     script
       include scripts/campaignCreate.js

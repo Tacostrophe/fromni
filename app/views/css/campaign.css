@@ -128,3 +128,6 @@ li.menu-group a {
 li.menu-group a:hover {
 	background-color: #2838e1;
 }
+div.buttons {
+	padding-left: 25px;
+}
