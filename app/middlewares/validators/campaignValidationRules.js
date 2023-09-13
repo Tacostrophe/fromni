@@ -68,7 +68,7 @@ const campaignValidationRules = [
           });
           const keyboard = canal.keyboardInline ?? canal.keyboardStandard;
           // button amount validation
-          if (value.length > +keyboard.button_max_amount) {
+          if (keyboard.button_max_amount && value.length > +keyboard.button_max_amount) {
             return Promise.reject(
               `Button amount for ${campaign.canal} with ${campaign.keyboard} keyboard`
               + ` can't be more than ${keyboard.button_max_amount}`
