@@ -25,7 +25,7 @@ exports.createPost = asyncHandler(async(req, res) => {
 
 exports.list = asyncHandler(async (req, res) => {
   const campaigns = await db.campaigns.findAll({
-    include: 'canal',
+    include: ['canal', 'buttons'],
     order: [
       ['updatedAt', 'DESC'],
       ['id', 'DESC'],
