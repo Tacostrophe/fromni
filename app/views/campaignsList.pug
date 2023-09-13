@@ -5,9 +5,24 @@ block layout-content
     div.heading 
       h2 #{title}
     if campaigns.length
-      each campaign in campaigns
-        ul
-          li
-            a(href="/campaigns/"+campaign.id) Campaign #{campaign.id} #{campaign.canal.name}  #{campaign.buttons}
+      table.u-full-width
+        thead
+          tr 
+            th id
+            th Canal 
+            th Message 
+            th Keyboard
+            th Buttons amount
+        tbody
+          each campaign in campaigns
+            tr
+              td
+                a(
+                  href="/campaigns/"+campaign.id
+                ) #{campaign.id}
+              td #{campaign.canal.name}
+              td #{campaign.message ? `"${campaign.message}"` : '-empty-'}
+              td #{campaign.keyboard_type}
+              td #{campaign.buttons ? campaign.buttons.length : 0}
     else 
       p No campaigns

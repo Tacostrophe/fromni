@@ -1,20 +1,40 @@
 extends layout
 
 block layout-content
-  div.View
-    h3 Campaign #{campaign.id}
-    p #{campaign.updatedAt}
-    ul
-      li Canal: #{campaign.canal.name}
-      if campaign.message
-        li Message: #{campaign.message}
-      li Keyboard: #{campaign.keyboard_type}
-      if campaign.buttons.length!=0
-        li Buttons:
-          ul
-            each button in campaign.buttons ? campaign.buttons : []
-              li 
-                h5 Button #{button.tag}
-                ul 
-                  li Type: #{button.type}
-                  li Text: #{button.text}
+  div.form
+    div.heading
+      h2 Campaign #{campaign.id}
+    label(for='canal')
+      span Canal
+      p #{campaign.canal.name}
+    
+    if campaign.message
+      label(for='message')
+        span Message  
+        p #{campaign.message}
+
+    label(for='keyboard')
+      span Keyboard
+      p #{campaign.keyboard_type} 
+
+    if campaign.buttons.length > 0
+      label(for='buttons')
+        span Buttons  
+
+
+
+    //- p #{campaign.updatedAt}
+    //- ul
+    //-   li Canal: #{campaign.canal.name}
+    //-   if campaign.message
+    //-     li Message: #{campaign.message}
+    //-   li Keyboard: #{campaign.keyboard_type}
+    //-   if campaign.buttons.length!=0
+    //-     li Buttons:
+    //-       ul
+    //-         each button in campaign.buttons ? campaign.buttons : []
+    //-           li 
+    //-             h5 Button #{button.tag}
+    //-             ul 
+    //-               li Type: #{button.type}
+    //-               li Text: #{button.text}

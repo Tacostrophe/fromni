@@ -1,18 +1,22 @@
 extends layout
 
 block layout-content
-  div.form
+    //- form
     div.heading
       h2  #{title}
-    form(method='POST' action='')
+    form(
+      method='POST'
+      action=''
+    )
+      //- div#campaigns.container
       div#campaigns
         if locals.campaigns
           - var i = 0;
           - var j;
           while i < locals.campaigns.length
-            label(id='campaign_'+i)
-              span.prm Campaign #{i+1}
-              button.btn(
+            label.row(id='campaign_'+i)
+              span.two.columns.prm Campaign #{i+1}
+              button.three.columns.btn(
                 type='button'
                 onclick='rmElement("campaign_' + i + '")'
               )
@@ -99,57 +103,100 @@ block layout-content
                   for error in locals.campaigns[i].errors
                     li!=error.msg
               - i++;
-
-
         else
-          label(id='campaign_0')
-            span.prm Campaign 1
-            button.btn(
-              type='button'
-              onclick='rmElement("campaign_0")'
-            )
-              | Delete campaign
-            label(for='canal')
-              span Canal  
-              select.select-field(
-                type='text'
-                name='canal_0'
-              )
-                each canal in canals
-                  option(value=canal) #{canal}
-            label(for='message')
-              span Message  
-              textarea.textarea-field(
+          #campaign_0
+            .row
+              .two.columns 
+                label(for='campaign') Campaign 1
+              .four.columns
+                input.button.u-full-width(
+                  type='button'
+                  onclick='rmElement("campaign_0")'
+                  value='Delete campaign'
+                )
+            //- label.row(id='campaign_0')
+            //-   span.u-pull-left.one-third.prm Campaign 1
+            //-   button.u-pull-right.two-third.btn(
+            //-     type='button'
+            //-     onclick='rmElement("campaign_0")'
+            //-   )
+            //-     | Delete campaign
+            .row 
+              .six.columns
+                label(for='canal') Canal 
+                select.u-full-width(
+                  type='text'
+                  name='canal_0'
+                )
+                  each canal in canals 
+                    option(value=canal) #{canal}
+              //-   label.row(for='canal')
+              //-     span.u-pull-left Canal  
+              //-     select.u-pull-right.select-field(
+              //-       type='text'
+              //-       name='canal_0'
+              //-     )
+              //-       each canal in canals
+              //-         option(value=canal) #{canal}
+              .six.columns 
+                label(for='keyboard') Keyboard
+                select.u-full-width(
+                  type='text'
+                  name='keyboard_0'
+                )
+                  option(value='inline') inline 
+                  option(value='standard') standard
+                //-   label.row(for='keyboard')
+                //-     span.u-pull-left Keyboard 
+                //-     select.u-pull-right.select-field(
+                //-       type='text'
+                //-       name='keyboard_0'
+                //-     )
+                //-       option(value='inline') inline
+                //-       option(value='standard') standard
+            .row 
+              label(for='message') Message 
+              textarea.u-full-width(
                 type='text'
                 name='message_0'
+                placeholder='Hello everyone'
+                style='resize: vertical;'
               )
-            label(for='keyboard')
-              span Keyboard 
-              select.select-field(
-                type='text'
-                name='keyboard_0'
-              )
-                option(value='inline') inline
-                option(value='standard') standard
-            label(for='buttons')
-              span Buttons 
-              button.btn(
-                type='button'
-                onclick='addButton()'
-              )
-                | Add button
-                 
-              div#buttons_0.buttons
+            //-   label.row(for='message')
+            //-     span.u-pull-left Message  
+            //-     textarea.u-pull-right.textarea-field(
+            //-       type='text'
+            //-       name='message_0'
+            //-     )
+            .row
+              .two.columns 
+                label(for='buttons') Buttons 
+              .four.columns
+                input.button.u-full-width(
+                  type='button'
+                  onclick='addButton()'
+                  value='Add button'
+                )
+            .row#buttons_0
+            //-   label.row(for='buttons')
+            //-     span.u-pull-left Buttons 
+            //-     button.u-pull-right(
+            //-       type='button'
+            //-       onclick='addButton()'
+            //-     )
+            //-       | Add button
+                   
+            //-     div#buttons_0.buttons
 
-      button.btn(
+      button.u-cf.btn(
         type='button'
         onclick='addCampaign('+JSON.stringify(canals) + ', ' + (locals.campaigns ? locals.campaigns.length - 1 : 0)+')'
       )
         | Add campaign
       br
-      button.btn(type='submit') Submit
+      button.button-primary(type='submit') Submit
 
-      if errors.length > 0
+      if errors && errors.length > 0
         ul.errors
           | Errors
           for error in errors

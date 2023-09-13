@@ -5,19 +5,32 @@ html
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
     meta(name='theme-color', content='#000000')
+    link(rel='icon' type='image/png' href='/images/favicon.png')
     title #{title} | Fromni
     style
-      include ./css/campaign.css
+      include ./css/normalize.css
+      include ./css/skeleton.css
+      //- include ./css/campaign.css
+
   body
-    div#root
-      div.primary-heading
+    div#root.container
+      div
         h1 Fromni
       nav
-        ul.menu
-          li.menu-group 
-            a(href='/') Home
-          li.menu-group
-            a(href='/campaigns/create') Create new campaign
-          li.menu-group
-            a(href='/campaigns') List of campaigns
+        div.row
+          div.one-third.column
+            a(
+              href='/'
+              style='text-decoration: none;'
+            ) Home
+          div.one-third.column
+            a(
+              href='/campaigns/create'
+              style='text-decoration: none;'
+            ) Create new campaign
+          div.one-third.column
+            a(
+              href='/campaigns'
+              style='text-decoration: none;'
+            ) List of campaigns
       block layout-content
