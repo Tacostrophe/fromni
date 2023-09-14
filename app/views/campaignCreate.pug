@@ -1,96 +1,168 @@
 extends layout
 
 block layout-content
-    //- form
     div.heading
       h2  #{title}
     form(
       method='POST'
       action=''
     )
-      //- div#campaigns.container
       div#campaigns
+        #campaign_0
+          .row
+            .two.columns 
+              label(for='campaign') Campaign 1
+            .four.columns
+              input.button.u-full-width(
+                type='button'
+                onclick='rmElement("campaign_0")'
+                value='Delete campaign'
+              )
+          .row 
+            .six.columns
+              label(for='canal') Canal 
+              select.u-full-width(
+                type='text'
+                name='canal_0'
+              )
+                each canal in canals 
+                  option(
+                    value=canal
+                    selected=(locals.campaigns ? canal===locals.campaigns[0].canal : false)
+                  ) #{canal}
+            .six.columns 
+              label(for='keyboard') Keyboard
+              select.u-full-width(
+                type='text'
+                name='keyboard_0'
+              )
+                option(
+                  value='inline'
+                  selected=(locals.campaigns ? 'inline'===locals.campaigns[0].keyboard : false)
+                ) inline 
+                option(
+                  value='standard'
+                  selected=(locals.campaigns ? 'standard'===locals.campaigns[0].keyboard : false)
+                ) standard
+          .row 
+            label(for='message') Message 
+            textarea.u-full-width(
+              type='text'
+              name='message_0'
+              placeholder='Hello everyone'
+              style='resize: vertical;'
+            )
+              | #{locals.campaigns ? (undefined===locals.campaigns[0].message ? '' : locals.campaigns[0].message) : ''}
+          .row
+            .two.columns 
+              label(for='buttons') Buttons 
+            .four.columns
+              input.button.u-full-width(
+                type='button'
+                onclick='addButton()'
+                value='Add button'
+              )
+          #buttons_0
         if locals.campaigns
-          - var i = 0;
+          - var i = 1;
           - var j;
           while i < locals.campaigns.length
-            label.row(id='campaign_'+i)
-              span.two.columns.prm Campaign #{i+1}
-              button.three.columns.btn(
-                type='button'
-                onclick='rmElement("campaign_' + i + '")'
-              )
-                | Delete campaign
-              label(for='canal') 
-                span Canal 
-                select.select-field(
-                  type='text'
-                  name='canal_'+i
-                )
-                  each canal in canals 
+            div(id='campaign_' + i)
+              .row 
+                .two.columns 
+                  label(for='campaign') Campaign #{i + 1}
+                .four.columns 
+                  input.button.u-full-width(
+                    type='button'
+                    onclick='rmElement("campaign_' + i + '")'
+                    value='Delete campaign'
+                  )
+              .row 
+                .six.columns
+                  label(for='canal') Canal 
+                  select.u-full-width(
+                    type='text'
+                    name='canal_' + i
+                  )
+                    each canal in canals 
+                      option(
+                        value=canal
+                        selected=(locals.campaigns ? canal===locals.campaigns[i].canal : false)
+                      ) #{canal}
+                .six.columns 
+                  label(for='keyboard') Keyboard
+                  select.u-full-width(
+                    type='text'
+                    name='keyboard_' + i
+                  )
                     option(
-                      value=canal
-                      selected=canal===locals.campaigns[i].canal
-                    ) #{canal}
-              label(for='message') 
-                span Message 
-                textarea.textarea-field(
+                      value='inline'
+                      selected=(locals.campaigns ? 'inline'===locals.campaigns[i].keyboard : false)
+                    ) inline 
+                    option(
+                      value='standard'
+                      selected=(locals.campaigns ? 'standard'===locals.campaigns[i].keyboard : false)
+                    ) standard
+              .row 
+                label(for='message') Message 
+                textarea.u-full-width(
                   type='text'
                   name='message_' + i
+                  placeholder='Hello everyone'
+                  style='resize: vertical;'
                 )
-                  | #{undefined===locals.campaigns[i].message ? '' : locals.campaigns[i].message}
-              label(for='keyboard')
-                span Keyboard 
-                select.select-field(
-                  type='text'
-                  name='keyboard_'+i 
-                )
-                  option(value='standard' selected=('standard'===locals.campaigns[i].keyboard)) standard
-                  option(value='inline' selected=('inline'===locals.campaigns[i].keyboard)) inline
-              label(for='buttons') 
-                span Buttons 
-                button.btn(
-                  type='button'
-                  onclick='addButton(' + i + ')'
-                )
-                  | Add button
-                div.buttons(id='buttons_'+i)
-                  if locals.campaigns[i].buttons
-                    - j = 0;
-                    while j < locals.campaigns[i].buttons.length
-                      label(id='button_'+i+'_'+j for='button')
-                        span Button
-                        button.btn(
-                          type='button'
-                          onclick='rmElement("button_' + i + '_' + j + '")'
-                        )
-                          | Delete button
-                        label(for='button type') 
-                          span Type 
-                          select.select-field(
+                  | #{locals.campaigns ? (undefined===locals.campaigns[i].message ? '' : locals.campaigns[i].message) : ''}
+              .row
+                .two.columns 
+                  label(for='buttons') Buttons 
+                .four.columns
+                  input.button.u-full-width(
+                    type='button'
+                    onclick='addButton(' + i + ')'
+                    value='Add button'
+                  )
+              div(id='buttons_'+i)
+                if locals.campaigns[i].buttons
+                  - j = 0;
+                  while j < locals.campaigns[i].buttons.length
+                    div(id='button_' + i + '_' + j)
+                      .row 
+                        .two.columns 
+                          label(for='button') Button 
+                        .four.columns 
+                          input.button.u-full-width(
+                            type='button'
+                            onclick='rmElement("button_' + i + '_' + j + '")'
+                            value='Delete button'
+                          )
+                      .row 
+                        .three.columns 
+                          label(for='button type') Button type 
+                          select.u-full-width(
                             type='text'
-                            name='buttons_'+ i + '_type' 
+                            name='buttons_' + i + '_type'
                           )
                             option(value='quick_answer' selected=('quick_answer'===locals.campaigns[i].buttons[j].type)) quick_answer
                             option(value='link' selected=('link'===locals.campaigns[i].buttons[j].type)) link
-                        label(for='button text')
-                          span Text 
-                            span.required *
-                          textarea.textarea-field(
-                            type='text'
-                            name='buttons_' + i + '_text'
-                            required=true
-                          )
-                            | #{locals.campaigns[i].buttons[j].text}
-                        label(for='button tag') 
-                          span Tag 
-                            span.required *
-                          input.input-field(
+                        .three.columns 
+                          label(for='button tag') Button tag 
+                          input.u-full-width(
                             type='text'
                             name='buttons_' + i + '_tag'
+                            required=true 
+                            placeholder='hello'
                             value=locals.campaigns[i].buttons[j].tag
-                            required=true
                           )
+                        .six.columns 
+                          label(for='button text') Button text 
+                          textarea.u-full-width(
+                            type='text'
+                            name='buttons_' + i + '_text'
+                            required=true 
+                            placeholder='Hello, my dear friend!'
+                            style='resize: none'
+                          )
+                            | #{locals.campaigns[i].buttons[j].text}
                       if locals.campaigns[i].buttons[j].errors
                         ul.errors 
                           | Button errors 
@@ -103,98 +175,19 @@ block layout-content
                   for error in locals.campaigns[i].errors
                     li!=error.msg
               - i++;
-        else
-          #campaign_0
-            .row
-              .two.columns 
-                label(for='campaign') Campaign 1
-              .four.columns
-                input.button.u-full-width(
-                  type='button'
-                  onclick='rmElement("campaign_0")'
-                  value='Delete campaign'
-                )
-            //- label.row(id='campaign_0')
-            //-   span.u-pull-left.one-third.prm Campaign 1
-            //-   button.u-pull-right.two-third.btn(
-            //-     type='button'
-            //-     onclick='rmElement("campaign_0")'
-            //-   )
-            //-     | Delete campaign
-            .row 
-              .six.columns
-                label(for='canal') Canal 
-                select.u-full-width(
-                  type='text'
-                  name='canal_0'
-                )
-                  each canal in canals 
-                    option(value=canal) #{canal}
-              //-   label.row(for='canal')
-              //-     span.u-pull-left Canal  
-              //-     select.u-pull-right.select-field(
-              //-       type='text'
-              //-       name='canal_0'
-              //-     )
-              //-       each canal in canals
-              //-         option(value=canal) #{canal}
-              .six.columns 
-                label(for='keyboard') Keyboard
-                select.u-full-width(
-                  type='text'
-                  name='keyboard_0'
-                )
-                  option(value='inline') inline 
-                  option(value='standard') standard
-                //-   label.row(for='keyboard')
-                //-     span.u-pull-left Keyboard 
-                //-     select.u-pull-right.select-field(
-                //-       type='text'
-                //-       name='keyboard_0'
-                //-     )
-                //-       option(value='inline') inline
-                //-       option(value='standard') standard
-            .row 
-              label(for='message') Message 
-              textarea.u-full-width(
-                type='text'
-                name='message_0'
-                placeholder='Hello everyone'
-                style='resize: vertical;'
-              )
-            //-   label.row(for='message')
-            //-     span.u-pull-left Message  
-            //-     textarea.u-pull-right.textarea-field(
-            //-       type='text'
-            //-       name='message_0'
-            //-     )
-            .row
-              .two.columns 
-                label(for='buttons') Buttons 
-              .four.columns
-                input.button.u-full-width(
-                  type='button'
-                  onclick='addButton()'
-                  value='Add button'
-                )
-            .row#buttons_0
-            //-   label.row(for='buttons')
-            //-     span.u-pull-left Buttons 
-            //-     button.u-pull-right(
-            //-       type='button'
-            //-       onclick='addButton()'
-            //-     )
-            //-       | Add button
-                   
-            //-     div#buttons_0.buttons
 
-      button.u-cf.btn(
-        type='button'
-        onclick='addCampaign('+JSON.stringify(canals) + ', ' + (locals.campaigns ? locals.campaigns.length - 1 : 0)+')'
-      )
-        | Add campaign
-      br
-      button.button-primary(type='submit') Submit
+      .row
+        .six.columns
+          input.button.u-full-width(
+            type='button'
+            onclick='addCampaign('+JSON.stringify(canals) + ', ' + (locals.campaigns ? locals.campaigns.length - 1 : 0)+')'
+            value='Add campaign'
+          )
+      .row
+        input.button-primary.u-full-width(
+          type='submit'
+          value='Submit'
+        )
 
       if errors && errors.length > 0
         ul.errors
