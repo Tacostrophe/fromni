@@ -77,16 +77,28 @@ async function populateDB() {
   let keyboardStandard;
   let keyboardInline;
   let canal;
-  await CANALS.reduce(async(promise, currentCanal) => {
-    await promise;
+
+  await Promise.all(CANALS.map(async (currentCanal) => {
     keyboards = await db.keyboards.bulkCreate(KEYBOARDS[currentCanal.name]);
-    keyboardStandard = keyboards.find((keyboard) => keyboard.type == 'standard');
-    keyboardInline = keyboards.find((keyboard) => keyboard.type == 'inline');
-    currentCanal.keyboardInlineId = keyboardInline.id;
-    currentCanal.keyboardStandardId = keyboardStandard.id;
-    console.log(currentCanal);
-    await db.canals.create(currentCanal);
-  }, Promise.resolve());
+    keyboardStandard = keyboards.find((keyboard) => keyboard.type === 'standard');
+    keyboardInline = keyboards.find((keyboard) => keyboard.type === 'inline');
+
+    canal = currentCanal;
+    canal.keyboardInlineId = keyboardInline.id;
+    canal.keyboardStandardId = keyboardStandard.id;
+    await db.canals.create(canal);
+  }));
+  // await CANALS.reduce(async (promise, currentCanal) => {
+  //   await promise;
+  //   keyboards = await db.keyboards.bulkCreate(KEYBOARDS[currentCanal.name]);
+  //   keyboardStandard = keyboards.find((keyboard) => keyboard.type === 'standard');
+  //   keyboardInline = keyboards.find((keyboard) => keyboard.type === 'inline');
+
+  //   canal = currentCanal;
+  //   canal.keyboardInlineId = keyboardInline.id;
+  //   canal.keyboardStandardId = keyboardStandard.id;
+  //   await db.canals.create(canal);
+  // }, Promise.resolve());
 }
 
 module.exports = populateDB;

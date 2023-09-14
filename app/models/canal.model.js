@@ -9,7 +9,7 @@ module.exports = (sequelize, Sequelize) => {
     },
   }, {
     timestamps: false,
-  })
+  });
 
-  return Canal;  
+  return Canal;
 };

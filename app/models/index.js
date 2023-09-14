@@ -14,7 +14,7 @@ const sequelize = new Sequelize(
   {
     host: process.env.HOST ?? 'localhost',
     dialect: 'postgres',
-  }
+  },
 );
 
 const db = {};
@@ -35,13 +35,13 @@ db.canals.belongsTo(db.keyboards, {
   as: 'keyboardInline',
 });
 
-db.campaigns.hasMany(db.buttons, {as: 'buttons'});
+db.campaigns.hasMany(db.buttons, { as: 'buttons' });
 db.buttons.belongsTo(db.campaigns, {
   foreignKey: 'campaignId',
   as: 'campaign',
 });
 
-db.canals.hasMany(db.campaigns, {as: 'campaigns'});
+db.canals.hasMany(db.campaigns, { as: 'campaigns' });
 db.campaigns.belongsTo(db.canals, {
   foreignKey: 'canalId',
   as: 'canal',

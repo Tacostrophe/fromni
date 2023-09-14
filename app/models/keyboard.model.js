@@ -4,7 +4,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       validate: {
         is: /^(?:standard|inline)$/,
-      }
+      },
     },
     button_max_amount: {
       type: Sequelize.NUMERIC,
@@ -17,7 +17,7 @@ module.exports = (sequelize, Sequelize) => {
     },
   }, {
     timestamps: false,
-  })
+  });
 
-  return Keyboard;  
+  return Keyboard;
 };

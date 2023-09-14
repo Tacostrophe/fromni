@@ -1,13 +1,13 @@
 function convertCampaign(req, res, next) {
-  campaigns = [];
+  const campaigns = [];
 
   Object.entries(req.body).forEach(([key, value]) => {
-    const [ attribute, campaignIndex, subAttribute ] = key.split('_');
-    if(!campaigns[+campaignIndex]) {
+    const [attribute, campaignIndex, subAttribute] = key.split('_');
+    if (!campaigns[+campaignIndex]) {
       campaigns[+campaignIndex] = {};
     }
 
-    if (attribute == 'buttons') {
+    if (attribute === 'buttons') {
       if (!campaigns[+campaignIndex][attribute]) {
         campaigns[+campaignIndex][attribute] = [];
       }
@@ -30,7 +30,7 @@ function convertCampaign(req, res, next) {
   });
 
   // if some campaign was deleted campaign list (campaigns var here) will include empty values
-  // so we filter them 
+  // so we filter them
   req.body = { campaigns: campaigns.filter((campaign) => campaign) };
   return next();
 }

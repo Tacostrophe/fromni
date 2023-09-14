@@ -4,7 +4,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       validate: {
         is: /^(?:answer|link)$/,
-      }
+      },
     },
     text: {
       type: Sequelize.STRING,
@@ -14,7 +14,7 @@ module.exports = (sequelize, Sequelize) => {
     },
   }, {
     timestamps: false,
-  })
+  });
 
-  return Button;  
+  return Button;
 };

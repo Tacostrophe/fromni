@@ -4,12 +4,12 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       validate: {
         is: /^(?:standard|inline)$/,
-      }
+      },
     },
     message: {
       type: Sequelize.STRING,
     },
-  })
+  });
 
-  return Campaign;  
+  return Campaign;
 };
