@@ -1,8 +1,16 @@
 /* eslint-disable no-unused-vars */
-function addButton(index = 0) {
-  const buttons = document.getElementById(`buttons_${index}`);
+function addButton(campaignIndex = 0, buttonIndex = -1) {
+  if (!this.indexes) {
+    this.indexes = {};
+    this.indexes[campaignIndex] = buttonIndex;
+  } else if ((this.indexes[campaignIndex]) === undefined) {
+    this.indexes[campaignIndex] = buttonIndex;
+  }
+  this.indexes[campaignIndex] += 1;
+  const buttons = document.getElementById(`buttons_${campaignIndex}`);
 
   const button = document.createElement('div');
+  button.id = `button_${campaignIndex}_${this.indexes[campaignIndex]}`;
   buttons.appendChild(button);
 
   let row = document.createElement('div');
@@ -44,7 +52,7 @@ function addButton(index = 0) {
 
   const buttonTypeSelect = document.createElement('select');
   buttonTypeSelect.className += 'u-full-width';
-  buttonTypeSelect.name = `buttons_${index}_type`;
+  buttonTypeSelect.name = `campaigns[${campaignIndex}][buttons][${this.indexes[campaignIndex]}][type]`;
   buttonTypeSelect.type = 'text';
   div.appendChild(buttonTypeSelect);
   let type;
@@ -67,7 +75,7 @@ function addButton(index = 0) {
   const buttonTagInput = document.createElement('input');
   buttonTagInput.className += 'u-full-width';
   buttonTagInput.type = 'text';
-  buttonTagInput.name = `buttons_${index}_tag`;
+  buttonTagInput.name = `campaigns[${campaignIndex}][buttons][${this.indexes[campaignIndex]}][tag]`;
   buttonTagInput.required = true;
   buttonTagInput.placeholder = 'hello';
   div.appendChild(buttonTagInput);
@@ -84,7 +92,7 @@ function addButton(index = 0) {
   const buttonTextarea = document.createElement('textarea');
   buttonTextarea.className += 'u-full-width';
   buttonTextarea.type = 'text';
-  buttonTextarea.name = `buttons_${index}_text`;
+  buttonTextarea.name = `campaigns[${campaignIndex}][buttons][${this.indexes[campaignIndex]}][text]`;
   buttonTextarea.required = true;
   buttonTextarea.placeholder = 'Hello, my dear friend!';
   buttonTextarea.style = 'resize: none';
@@ -101,11 +109,12 @@ function addCampaign(canals, i) {
     this.index = i;
   }
   this.index += 1;
+  const { index } = this;
 
   const campaigns = document.getElementById('campaigns');
 
   const newCampaign = document.createElement('div');
-  newCampaign.id = `campaign_${this.index}`;
+  newCampaign.id = `campaign_${index}`;
   campaigns.appendChild(newCampaign);
 
   let row = document.createElement('div');
@@ -118,7 +127,7 @@ function addCampaign(canals, i) {
 
   const campaignLabel = document.createElement('label');
   campaignLabel.for = 'campaign';
-  campaignLabel.appendChild(document.createTextNode(`Campaign ${this.index + 1}`));
+  campaignLabel.appendChild(document.createTextNode(`Campaign ${index + 1}`));
   div.appendChild(campaignLabel);
 
   div = document.createElement('div');
@@ -148,7 +157,7 @@ function addCampaign(canals, i) {
   let campaignSelect = document.createElement('select');
   campaignSelect.className += 'u-full-width';
   campaignSelect.type = 'text';
-  campaignSelect.name = `canal_${this.index}`;
+  campaignSelect.name = `campaigns[${index}][canal]`;
   div.appendChild(campaignSelect);
 
   let selectOption;
@@ -171,7 +180,7 @@ function addCampaign(canals, i) {
   campaignSelect = document.createElement('select');
   campaignSelect.className += 'u-full-width';
   campaignSelect.type = 'text';
-  campaignSelect.name = `keyboard_${this.index}`;
+  campaignSelect.name = `campaigns[${index}][keyboard]`;
   div.appendChild(campaignSelect);
 
   ['inline', 'standard'].forEach((keyboard) => {
@@ -193,7 +202,7 @@ function addCampaign(canals, i) {
   const campaignTextArea = document.createElement('textarea');
   campaignTextArea.className += 'u-full-width';
   campaignTextArea.type = 'text';
-  campaignTextArea.name = `message_${this.index}`;
+  campaignTextArea.name = `campaigns[${index}][message]`;
   campaignTextArea.placeholder = 'Hello everyone';
   campaignTextArea.style = 'resize: vertical';
   row.appendChild(campaignTextArea);
@@ -215,8 +224,6 @@ function addCampaign(canals, i) {
   div.className += 'four columns';
   row.appendChild(div);
 
-  const { index } = this;
-
   const inputAddButton = document.createElement('input');
   inputAddButton.className += 'button u-full-width';
   inputAddButton.type = 'button';
@@ -225,6 +232,6 @@ function addCampaign(canals, i) {
   div.appendChild(inputAddButton);
 
   const buttonsDiv = document.createElement('div');
-  buttonsDiv.id = `buttons_${this.index}`;
+  buttonsDiv.id = `buttons_${index}`;
   newCampaign.appendChild(buttonsDiv);
 }
