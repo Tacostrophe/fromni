@@ -1,40 +1,42 @@
 extends layout
 
 block layout-content
-  div.form
-    div.heading
-      h2 Campaign #{campaign.id}
-    label(for='canal')
-      span Canal
-      p #{campaign.canal.name}
-    
-    if campaign.message
-      label(for='message')
-        span Message  
-        p #{campaign.message}
-
-    label(for='keyboard')
-      span Keyboard
-      p #{campaign.keyboard_type} 
-
-    if campaign.buttons.length > 0
-      label(for='buttons')
-        span Buttons  
-
-
-
-    //- p #{campaign.updatedAt}
-    //- ul
-    //-   li Canal: #{campaign.canal.name}
-    //-   if campaign.message
-    //-     li Message: #{campaign.message}
-    //-   li Keyboard: #{campaign.keyboard_type}
-    //-   if campaign.buttons.length!=0
-    //-     li Buttons:
-    //-       ul
-    //-         each button in campaign.buttons ? campaign.buttons : []
-    //-           li 
-    //-             h5 Button #{button.tag}
-    //-             ul 
-    //-               li Type: #{button.type}
-    //-               li Text: #{button.text}
+  .heading
+    h2 Campaign #{campaign.id}
+  .campaign 
+    .row 
+      .two.columns
+        label(for='canal') Canal 
+      .ten.columns 
+        p=campaign.canal.name 
+    .row 
+      .two.columns
+        label(for='keyboard') Keyboard
+      .ten.columns
+        p=campaign.keyboard_type 
+    .row 
+      .two.columns
+        label(for='message') Message 
+      .ten.columns
+        p=campaign.message ? '"' + campaign.message + '"' : '-no message-'
+    if campaign.buttons.length
+      .row 
+        .two.columns
+          label(for='buttons') Buttons 
+      .row
+        - let i = 1;
+        table.u-full-width 
+          thead 
+            tr 
+              th #
+              th Tag 
+              th Type 
+              th Text
+          tbody 
+            each button in campaign.buttons 
+              tr 
+                td #{i}
+                td #{button.tag}
+                td #{button.type} 
+                td #{button.text}
+              - i += 1;
