@@ -23,7 +23,7 @@ block layout-content
               label(for='canal') Canal 
               select.u-full-width(
                 type='text'
-                name='canal_0'
+                name='campaigns[0][canal]'
               )
                 each canal in canals 
                   option(
@@ -34,7 +34,7 @@ block layout-content
               label(for='keyboard') Keyboard
               select.u-full-width(
                 type='text'
-                name='keyboard_0'
+                name='campaigns[0][keyboard]'
               )
                 option(
                   value='inline'
@@ -48,7 +48,7 @@ block layout-content
             label(for='message') Message 
             textarea.u-full-width(
               type='text'
-              name='message_0'
+              name='campaigns[0][message]'
               placeholder='Hello everyone'
               style='resize: vertical;'
             )
@@ -63,9 +63,62 @@ block layout-content
                 value='Add button'
               )
           #buttons_0
+            - var j;
+            if locals.campaigns
+              if locals.campaigns[0].buttons
+                - j = 0;
+                while j < locals.campaigns[0].buttons.length
+                  div(id='button_' + 0 + '_' + j)
+                    .row 
+                      .two.columns 
+                        label(for='button') Button 
+                      .four.columns 
+                        input.button.u-full-width(
+                          type='button'
+                          onclick='rmElement("button_' + 0 + '_' + j + '")'
+                          value='Delete button'
+                        )
+                    .row 
+                      .three.columns 
+                        label(for='button type') Button type 
+                        select.u-full-width(
+                          type='text'
+                          name='campaigns[0][buttons][' + j + '][type]'
+                        )
+                          option(value='quick_answer' selected=('quick_answer'===locals.campaigns[0].buttons[j].type)) quick_answer
+                          option(value='link' selected=('link'===locals.campaigns[0].buttons[j].type)) link
+                      .three.columns 
+                        label(for='button tag') Button tag 
+                        input.u-full-width(
+                          type='text'
+                          name='campaigns[0][buttons][' + j + '][tag]'
+                          required=true 
+                          placeholder='hello'
+                          value=locals.campaigns[0].buttons[j].tag
+                        )
+                      .six.columns 
+                        label(for='button text') Button text 
+                        textarea.u-full-width(
+                          type='text'
+                          name='campaigns[0][buttons][' + j + '][text]'
+                          required=true 
+                          placeholder='Hello, my dear friend!'
+                          style='resize: none'
+                        )
+                          | #{locals.campaigns[0].buttons[j].text}
+                    if locals.campaigns[0].buttons[j].errors
+                      ul.errors 
+                        | Button errors 
+                        for error in locals.campaigns[0].buttons[j].errors
+                          li!=error.msg
+                    - j++;
+              if locals.campaigns[0].errors
+                ul.errors 
+                  | Errors 
+                  for error in locals.campaigns[0].errors
+                    li!=error.msg
         if locals.campaigns
           - var i = 1;
-          - var j;
           while i < locals.campaigns.length
             div(id='campaign_' + i)
               .row 
@@ -82,7 +135,7 @@ block layout-content
                   label(for='canal') Canal 
                   select.u-full-width(
                     type='text'
-                    name='canal_' + i
+                    name='campaigns[' + i + '][canal]'
                   )
                     each canal in canals 
                       option(
@@ -93,7 +146,7 @@ block layout-content
                   label(for='keyboard') Keyboard
                   select.u-full-width(
                     type='text'
-                    name='keyboard_' + i
+                    name='campaigns[' + i + '][keyboard]'
                   )
                     option(
                       value='inline'
@@ -107,7 +160,7 @@ block layout-content
                 label(for='message') Message 
                 textarea.u-full-width(
                   type='text'
-                  name='message_' + i
+                  name='campaigns[' + i + '][message]'
                   placeholder='Hello everyone'
                   style='resize: vertical;'
                 )
@@ -140,7 +193,7 @@ block layout-content
                           label(for='button type') Button type 
                           select.u-full-width(
                             type='text'
-                            name='buttons_' + i + '_type'
+                            name='campaigns[' + i + '][buttons][' + j + '][type]'
                           )
                             option(value='quick_answer' selected=('quick_answer'===locals.campaigns[i].buttons[j].type)) quick_answer
                             option(value='link' selected=('link'===locals.campaigns[i].buttons[j].type)) link
@@ -148,7 +201,7 @@ block layout-content
                           label(for='button tag') Button tag 
                           input.u-full-width(
                             type='text'
-                            name='buttons_' + i + '_tag'
+                            name='campaigns[' + i + '][buttons][' + j + '][tag]'
                             required=true 
                             placeholder='hello'
                             value=locals.campaigns[i].buttons[j].tag
@@ -157,7 +210,7 @@ block layout-content
                           label(for='button text') Button text 
                           textarea.u-full-width(
                             type='text'
-                            name='buttons_' + i + '_text'
+                            name='campaigns[' + i + '][buttons][' + j + '][text]'
                             required=true 
                             placeholder='Hello, my dear friend!'
                             style='resize: none'
@@ -180,7 +233,7 @@ block layout-content
         .six.columns
           input.button.u-full-width(
             type='button'
-            onclick='addCampaign('+JSON.stringify(canals) + ', ' + (locals.campaigns ? locals.campaigns.length - 1 : 0)+')'
+            onclick='addCampaign('+ JSON.stringify(canals) + ', ' + (locals.campaigns ? locals.campaigns.length - 1 : 0)+')'
             value='Add campaign'
           )
       .row
@@ -193,7 +246,7 @@ block layout-content
         ul.errors
           | Errors
           for error in errors
-            li!= error.path + " " + error.msg
+            li!= error.msg
   
     script
       include scripts/campaignCreate.js
